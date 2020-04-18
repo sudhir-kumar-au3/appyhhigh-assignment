@@ -109,7 +109,7 @@ const addTodo = (req, res) => {
                 text: `${response
                   .map((data, index) => `${index + 1}. *${data.task}*\tby: ${data.author}\t_${moment(
                     data.createdAt
-                  ).format("h:mm a, MM Do YYYY")}_\n`)
+                  ).utcOffset("+5:30").format("h:mm a, MM Do YYYY")}_\n`)
                   .join("")}`,
               },
             ],
