@@ -119,7 +119,9 @@ const addTodo = (req, res) => {
             attachments: [
               {
                 text: `${response
-                  .map((data, index) => `${index + 1}. ${data.task}>${data.author}>_${data.createdAt}_\n`)
+                  .map((data, index) => `${index + 1}. *${data.task}*\tby: ${data.author}\t_${moment(
+                    data.createdAt
+                  ).format("h:mm a, MM Do YYYY")}_\n`)
                   .join("")}`,
               },
             ],
