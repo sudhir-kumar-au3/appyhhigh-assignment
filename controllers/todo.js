@@ -28,9 +28,7 @@ const addTodo = (req, res) => {
                     text: "Hello :smile:",
                     attachments: [
                       {
-                        text: `${addedData.author}\t Added *${
-                          addedData.task
-                        }* into TODO \n> _${```${timestamp}```}_`
+                        text: `${addedData.author}\t Added *${addedData.task}* into TODO \n> _${```${timestamp}```}_`
                       }
                     ]
                   }
