@@ -27,16 +27,16 @@ const addTodo = (req, res) => {
             // }
             // res.status(200).json(out);
             Todo.create(data)
-              .then(addedData => {
+              .then(data => {
                 res.status(200).json({
                   response_type: "in_channel",
                   text: "Hello :smile:",
                   attachments: [
                     {
-                      text: `${addedData.author}\t Added *${
-                        addedData.task
+                      text: `${data.author}\t Added *${
+                        data.task
                       }* into TODO \n> _${```${moment(
-                        addedData.createdAt
+                        data.createdAt
                       ).format("h:mm a, MM Do YYYY")}```}_`,
                     },
                   ],
