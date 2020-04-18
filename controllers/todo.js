@@ -41,11 +41,11 @@ const addTodo = (req, res) => {
                     },
                   ],
                 };
-                res.status(200).json(out);
               })
               .catch((error) => {
                 res.status(500).json({ error: error.message });
               });
+              res.status(200).json(out);
           } else {
             out = {
               attachments: [
