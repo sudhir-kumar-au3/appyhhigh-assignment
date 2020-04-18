@@ -28,7 +28,7 @@ const addTodo = (req, res) => {
             // res.status(200).json(out);
             Todo.create(data)
               .then(addedData => {
-                out = {
+                res.status(200).json({
                   response_type: "in_channel",
                   text: "Hello :smile:",
                   attachments: [
@@ -40,12 +40,11 @@ const addTodo = (req, res) => {
                       ).format("h:mm a, MM Do YYYY")}```}_`,
                     },
                   ],
-                };
+                })
               })
               .catch((error) => {
                 res.status(500).json({ error: error.message });
               });
-              res.status(200).json(out);
           } else {
             out = {
               attachments: [
