@@ -16,31 +16,19 @@ const addTodo = (req, res) => {
       })
         .then((todoData) => {
           if (!todoData) {
-            // out = {
-            //   response_type: "in_channel",
-            //   text: "Hello :smile:",
-            //   attachments:[
-            //     {
-            //       text: `_${data.author}_\t added *${data.task}* in TODO`
-            //     }
-            //   ]
-            // }
-            // res.status(200).json(out);
+            out = {
+              response_type: "in_channel",
+              text: "Hello :smile:",
+              attachments:[
+                {
+                  text: `_${data.author}_\t added *${data.task}* in TODO`
+                }
+              ]
+            }
+            res.status(200).json(out);
             Todo.create(data)
               .then(data => {
-                res.status(200).json({
-                  response_type: "in_channel",
-                  text: "Hello :smile:",
-                  attachments: [
-                    {
-                      text: `${data.author}\t Added *${
-                        data.task
-                      }* into TODO \n> _${```${moment(
-                        data.createdAt
-                      ).format("h:mm a, MM Do YYYY")}```}_`,
-                    },
-                  ],
-                })
+                console.log(data);
               })
               .catch((error) => {
                 res.status(500).json({ error: error.message });
