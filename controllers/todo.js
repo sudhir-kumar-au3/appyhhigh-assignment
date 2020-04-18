@@ -119,7 +119,7 @@ const addTodo = (req, res) => {
             attachments: [
               {
                 text: `${response
-                  .map((data, index) => `${index + 1}. ${data.task}\n`)
+                  .map((data, index) => `${index + 1}. ${data.task}>${data.author}>_${data.createdAt}_\n`)
                   .join("")}`,
               },
             ],
