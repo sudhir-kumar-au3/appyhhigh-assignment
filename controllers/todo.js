@@ -16,32 +16,32 @@ const addTodo = (req, res) => {
       })
         .then((todoData) => {
           if (!todoData) {
-            out = {
-              response_type: "in_channel",
-              text: "Hello :smile:",
-              attachments:[
-                {
-                  text: `_${data.author}_\t added *${data.task} in TODO*`
-                }
-              ]
-            }
-            res.status(200).json(out);
+            // out = {
+            //   response_type: "in_channel",
+            //   text: "Hello :smile:",
+            //   attachments:[
+            //     {
+            //       text: `_${data.author}_\t added *${data.task}* in TODO`
+            //     }
+            //   ]
+            // }
+            // res.status(200).json(out);
             Todo.create(data)
-              .then((addedData) => {
-                // out = {
-                //   response_type: "in_channel",
-                //   text: "Hello :smile:",
-                //   attachments: [
-                //     {
-                //       text: `${addedData.author}\t Added *${
-                //         addedData.task
-                //       }* into TODO \n> _${```${moment(
-                //         addedData.createdAt
-                //       ).format("h:mm a, MM Do YYYY")}```}_`,
-                //     },
-                //   ],
-                // };
-                // res.status(200).json(out);
+              .then(addedData => {
+                out = {
+                  response_type: "in_channel",
+                  text: "Hello :smile:",
+                  attachments: [
+                    {
+                      text: `${addedData.author}\t Added *${
+                        addedData.task
+                      }* into TODO \n> _${```${moment(
+                        addedData.createdAt
+                      ).format("h:mm a, MM Do YYYY")}```}_`,
+                    },
+                  ],
+                };
+                res.status(200).json(out);
               })
               .catch((error) => {
                 res.status(500).json({ error: error.message });
