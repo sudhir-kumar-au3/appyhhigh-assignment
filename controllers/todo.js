@@ -18,35 +18,29 @@ const addTodo = (req, res) => {
           if (!todoData) {
             Todo.create(data)
               .then((addedData) => {
-                console.log(addedData)
-                if(addedData){
-                  let timestamp = moment(addedData.createdAt).format(
-                    "h:mm a, MM Do YYYY"
-                  );
-                  out = {
-                    response_type: "in_channel",
-                    text: "Hello :smile:",
-                    attachments: [
-                      {
-                        text: `${addedData.author}\t Added *${addedData.task}* into TODO \n> _${```${timestamp}```}_`
-                      }
-                    ]
-                  }
-                  res.status(200).json(out);
-                }
-                else{
-                  res.status(200).json({text: "something went wrong"})
-                }
+                out = {
+                  response_type: "in_channel",
+                  text: "Hello :smile:",
+                  attachments: [
+                    {
+                      text: `${addedData.author}\t Added *${
+                        addedData.task
+                      }* into TODO \n> _${```${moment(
+                        addedData.createdAt
+                      ).format("h:mm a, MM Do YYYY")}```}_`,
+                    },
+                  ],
+                };
+                res.status(200).json(out);
               })
               .catch((error) => {
                 res.status(500).json({ error: error.message });
               });
-          } 
-          else {
+          } else {
             out = {
               attachments: [
                 {
-                  text: `This task already added in the list`,
+                  text: `A similar task already added in the list`,
                   color: "danger",
                 },
               ],
@@ -57,8 +51,7 @@ const addTodo = (req, res) => {
         .catch((error) => {
           res.status(500).json({ error: error.message });
         });
-    } 
-    else {
+    } else {
       out = {
         attachments: [
           {
@@ -109,35 +102,36 @@ const addTodo = (req, res) => {
   else if (req.body.command === "/listtask") {
     Todo.find({
       channelId: req.body.channel_id,
-    }).then((response) => {
-      if (response.length > 0) {
-        out = {
-          response_type: "in_channel",
-          attachments: [
-            {
-              text: `${response
-                .map((data, index) => `${index + 1}. ${data.task}\n`)
-                .join("")}`,
-            },
-          ],
-        };
-        res.status(200).json(out);
-      } else {
-        out = {
-          response_type: "in_channel",
-          attachments: [
-            {
-              text: "Nothing in TODO",
-              color: "danger",
-            },
-          ],
-        };
-        res.status(200).json(out);
-      }
     })
-    .catch(err =>{
-      res.status(500).json({error: err.message})
-    });
+      .then((response) => {
+        if (response.length > 0) {
+          out = {
+            response_type: "in_channel",
+            attachments: [
+              {
+                text: `${response
+                  .map((data, index) => `${index + 1}. ${data.task}\n`)
+                  .join("")}`,
+              },
+            ],
+          };
+          res.status(200).json(out);
+        } else {
+          out = {
+            response_type: "in_channel",
+            attachments: [
+              {
+                text: "Nothing in TODO",
+                color: "danger",
+              },
+            ],
+          };
+          res.status(200).json(out);
+        }
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
   }
 };
 module.exports = {
